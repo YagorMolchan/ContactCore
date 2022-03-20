@@ -1,0 +1,35 @@
+﻿@model ContactCore.Models.ViewModels.RegisterViewModel
+
+<h2>Регистрация нового пользователя</h2>
+<form asp-controller="Account" asp-action="Register" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="form-group">
+        <label asp-for="Firstname"></label><br/>
+        <input class="form-control" asp-for="Firstname"/><br/>
+        <span asp-validation-for="Firstname"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Lastname"></label><br/>
+        <input class="form-control" asp-for="Lastname"/><br/>
+        <span asp-validation-for="Lastname"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label><br />
+        <input class="form-control" asp-for="Email" /><br/>
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password"></label><br />
+        <input class="form-control" asp-for="Password" /><br/>
+        <span asp-validation-for="Password"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ConfirmPassword"></label><br />
+        <input class="form-control" asp-for="ConfirmPassword" /><br/>
+        <span asp-validation-for="ConfirmPassword"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Регистрация" />
+    </div>
+</form>
+

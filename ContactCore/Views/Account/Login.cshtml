@@ -1,0 +1,23 @@
+﻿@model ContactCore.Models.ViewModels.LoginViewModel
+    
+<h2>Вход</h2>
+<form asp-action="Login" asp-controller="Account" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="form-group">
+        <label asp-for="Email"></label><br />
+        <input class="form-control" asp-for="Email" /><br />
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password"></label><br />
+        <input class="form-control" asp-for="Password" /><br />
+        <span asp-validation-for="Password"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="RememberMe"></label><br />
+        <input asp-for="RememberMe" />
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Вход" />
+    </div>
+</form>

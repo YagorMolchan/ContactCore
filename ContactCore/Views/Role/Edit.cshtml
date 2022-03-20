@@ -1,0 +1,11 @@
+﻿@model ContactCore.Models.ViewModels.RoleViewModel
+
+<h2>Редактировать роль</h2>
+<form asp-action="Edit" asp-controller="Role" method="post">
+    <input type="hidden" asp-for="@Model.Id"/>
+    <div class="form-group">
+        <label for="name">Новая роль</label>
+        <input asp-for="@Model.Name" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Изменить</button>
+</form>

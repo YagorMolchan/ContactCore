@@ -1,0 +1,92 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<ContactCore.Models.Entities.ApplicationUser>
+@inject RoleManager<IdentityRole> RoleManager
+@inject UserManager<ContactCore.Models.Entities.ApplicationUser> UserManager
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>Ник</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nickname</td>
+                <td>@item.Email</td>
+                <td>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <a asp-action="UpdateRolesOfUser" asp-route-userId="@item.Id" class="btn btn-secondary">Назначить роли</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div class="modal fade" id="AddRoleToUserModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Назначение роли</h4>
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="userId" />
+                <label>Роль</label>
+                <div class="form-check" id="checkList">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-secondary" data-dismiss="modal">Отменить</a>
+                <a href="#" class="btn btn-primary" onclick="UpdateRoleOfUser()" >Подтвердить</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    function AddRoleToUser(UserId) {
+        $("#AddRoleToUserModal").modal("show");
+        $.ajax({
+            type: 'GET',
+            url: '/Home/UpdateRoleOfUser?' + 'userId=' + UserId,
+            contentType: "application/json;charset=utf-8",
+            dataType: 'json',
+            success: function (data) {
+                var options = '';
+                $("#checkList").empty();
+                var obj = JSON.parse(data);
+                for (let item of obj.AllRoles) {
+                    options += '<input class="form-check-input" type="chekbox"/><br/>'; /*value="' + item.Id + '"' + (obj.UserRoles.includes(item.Name)) ? 'checked' : '' + '/>' + item.Name + "<br/>";*/
+                }
+                $("#roleList").append(options); 
+                $("#userId").val(obj.UserId);
+            }
+        });
+    }
+
+    function UpdateRoleOfUser() {
+        let roleId = $("#roleList").val();
+        let userId = $("#userId").val();
+        $.ajax({
+            type: 'POST',
+            url: "/Home/UpdateRoleOfUser",
+            data: { UserId: userId, RoleId: roleId },
+            success: function () {
+                window.location.href = "/Home/Index";
+                $("#AddRoleToUserModal").modal("hide");
+            }
+        });
+    }
+
+
+</script>
